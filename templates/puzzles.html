@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="icon" href="../static/img/favicon.svg">
+    <title>Chess Blunder Finder</title>
+</head>
+
+<body>
+    <div id="puzzles">
+        <h1>{{color}} to Move</h1>
+        <a href="{{game_url}}" target="_blank">
+            <table>
+                {% for row in files_array %}
+                <tr>
+                    {% for file in row %}
+                    <td><img id="square" src="{{file}}" alt="{{file}}" height="60" width="60"></td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </a>
+
+        <form id="delete_form" action="{{url_for('delete', lichess_username=lichess_username, db_id=db_id)}}" method="post">
+            <input id="delete_button" name="delete_button" type="submit" value="Delete puzzle">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        </form>
+
+        <form id="puzzle_form" action="{{url_for('puzzles', lichess_username=lichess_username)}}" method="post">
+            <input id="solution_button" name="solution_button" type="submit" value="See solution">
+            <input id="next_puzzle_button" name="next_puzzle_button" type="submit" value="Next puzzle">
+            <p id="solution">Solution: <strong>{{solution}}</strong></p>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        </form>
+    </div>
+</body>
+
+</html>

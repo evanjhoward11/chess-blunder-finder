@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="icon" href="../static/img/favicon.svg">
+    <title>Chess Blunder Finder</title>
+</head>
+
+<body>
+    <div id="index">
+        <h1>Chess Blunder Finder</h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p id="flash_msg">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form id="analysis_form" action="{{url_for('home')}}" method="post">
+            <label for="username"><strong><a href="https://lichess.org">Lichess</a> Username:</strong> 
+                <input id="username" name="username" type="text" placeholder="ex. howar129" required>
+            </label>
+            <label for="num_games"><strong>Number of games (up to 10):</strong>
+                <input id="num_games" name="num_games" type="number" min="1" max="10" required>
+            </label>
+            <fieldset>
+                <p class="p_index"><strong>Time Control:</strong></p>
+                <label for="classical" id="time_control">
+                    <input id="classical" name="time_format" class="time_format" type="checkbox" value="classical">Classical
+                </label>
+                <label for="rapid">
+                    <input id="rapid" name="time_format" class="time_format" type="checkbox" value="rapid" checked>Rapid
+                </label>
+                <label for="blitz">
+                    <input id="blitz" name="time_format" class="time_format" type="checkbox" value="blitz">Blitz
+                </label>
+                <label for="bullet">
+                    <input id="bullet" name="time_format" class="time_format" type="checkbox" value="bullet">Bullet
+                </label>
+            </fieldset>
+            <fieldset>
+                <p class="p_index"><strong>Game Mode:</strong></p>
+                <label for="rated" id="game_type"> 
+                    <input id="rated" name="game_mode" class="game_mode" type="radio" value=True checked>Rated
+                </label>
+                <label for="casual">
+                    <input id="casual" name="game_mode" class="game_mode" type="radio" value=False >Casual
+                </label>
+            </fieldset>
+            <p id="warning_message" class="p_index"><span id="warning">Warning:</span> Time required for analysis depends on the number of games and
+                game length. Analysis can take over 10 minutes to complete.</p>
+            <input id="analysis_button" type="submit" value="Start Analysis">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        </form>
+        
+    </div>
+</body>
+</html>
